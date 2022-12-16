@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">KICK IT</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" *ngIf="currentPlayer">{{currentPlayer.firstName}} {{currentPlayer.lastName}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+          </li>
+        </ul>
+              <form class="d-flex">
+                  <button  *ngIf="currentPlayer" class="btn btn-outline-success" (click)="logout()" type="button">Logout</button>
+                  <button *ngIf="!currentPlayer" class="btn btn-outline-success" (click)="login()" type="button">Login</button>
+               </form>
+      </div>
+    </div>
+  </nav>
+
+<div class="container mt-4">
+  
+  <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="row g-3 mb-4" *ngIf="currentPlayer">
+    <div class="col-sm">
+      <input type="text" formControlName="title" class="form-control" placeholder="Title" aria-label="Title">
+    </div>
+    <div class="col-sm-5">
+      <textarea cols="30" rows="1" formControlName="desc" class="form-control" placeholder="Description" aria-label="State"></textarea>
+    </div>
+    <div class="col-sm">
+      <select formControlName="typ" class="form-control">
+        <option value="5">5 Players</option>
+        <option value="6">6 Players</option>
+        <option value="7">7 Players</option>
+        <option value="11">11 Players</option>
+      </select>
+    </div>
+    <div class="col-sm">
+      
+      <button class="btn btn-success w-100" type="submit">ADD</button>
+    </div>
+  </form>
+ <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col" *ngFor="let r of rooms">
+    <div class="card">
+     
+      <div class="card-body">
+        <div class="justify-content-between d-flex">
+
+          <a  [routerLink]="['/playerSpace',r._id]" class="btn btn-primary mb-2" >VIEW</a>
+          <a *ngIf="currentPlayer && r.owner!==currentPlayer._id && !verify(r)" href=""  (click)="exit(r)" class="btn btn-danger mb-2" >EXIT</a>
+
+          <a *ngIf="currentPlayer && r.owner!==currentPlayer._id && verify(r)" href="" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="join(r)" class="btn btn-success mb-2" >JOIN</a>
+          <h6 *ngIf="currentPlayer && r.owner===currentPlayer._id"  class="text-secondary">Owner</h6>
+        
+          <h6 class="text-success">Open</h6>
+        </div>
+        <h6 class="card-title">{{r.title}}</h6>
+        <h6 class="card-title">{{r.type}} Players Room</h6>
+        <!--
+             <p class="card-text">{{r.description}}</p>
+        -->
+       
+      </div>
+      
+    </div>
+  </div>
+ </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="" class="row" [formGroup]="joinForm" (ngSubmit)="onJoin()">
+            <div class="col-6">
+              <select formControlName="team" class="form-control">
+                <option value="0" selected>Team A</option>
+                <option value="1">Team B</option>
+              </select>
+           </div>
+           <div class="col-6">
+            <button class="btn btn-success w-100"  data-bs-dismiss="modal" type="submit">JOIN</button>
+           </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

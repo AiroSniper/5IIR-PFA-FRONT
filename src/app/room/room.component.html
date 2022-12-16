@@ -1,0 +1,56 @@
+<div class="container row mt-4" *ngIf="currentRoom">
+  <div class="col-6 container">
+    <div class="row p-3">
+      <div class="chatbox">
+        <div class="message me"></div>
+        <div class="message you"></div>
+      </div>
+    </div>
+    <div class="row mt-2 pt-1 pb-1">
+      <div class="col-10"><input class="form-control" type="text"></div>
+      <div class="col-2"><button class="btn btn-success w-100">Send</button></div>
+    </div>
+  </div>
+  <div class="col-6 row">
+    <dl class="row">
+      <dt class="col-sm-3">Title</dt>
+      <dd class="col-sm-9">{{currentRoom.title}}</dd>
+
+      <dt class="col-sm-3">Description</dt>
+      <dd class="col-sm-9">
+        <p>{{currentRoom.description}}.</p>
+      </dd>
+
+      <dt class="col-sm-3">Date & Time</dt>
+      <dd class="col-sm-9">15 Dec 2022 , 10:20 AM</dd>
+
+      <dt class="col-sm-3 text-truncate">Club</dt>
+      <dd class="col-sm-9">Not Specified</dd>
+
+    </dl>
+
+    <div class="row">
+      <div class="col-6">
+        <h5>Team A</h5>
+        <div *ngIf="currentRoom.teams" class="list-group mt-2">
+          <label  class="list-group-item" *ngFor="let player of currentRoom.teams[0].players">
+            <input class="form-check-input me-1" type="checkbox" value="">
+            {{player.firstName}} {{player.lastName}}
+          </label>
+        </div>
+      </div>
+      <div class="col-6">
+        <h5>Team B</h5>
+        <div *ngIf="currentRoom.teams" class="list-group mt-2">
+          <label  class="list-group-item" *ngFor="let player of currentRoom.teams[1].players">
+            <input class="form-check-input me-1" type="checkbox" value="">
+            {{player.firstName}} {{player.lastName}}
+          </label>
+        </div>
+      </div>
+    </div>
+   </div>
+</div>
+
+
+

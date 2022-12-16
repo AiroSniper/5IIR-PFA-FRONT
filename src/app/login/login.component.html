@@ -1,0 +1,15 @@
+<main class="form-signin d-flex justify-content-center align-items-center h-100" >
+    <form>
+      <div class="form-floating">
+        <select id="player" #pls (change)="onSelected(pls.value)" class="form-control" >
+            <option *ngFor="let p of players" value="{{p._id}}">{{p.firstName}} {{p.lastName}}</option>
+        </select>
+        <label for="player">Player</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary"  *ngIf="!currentPlayer"  (click)="login()"  type="button">Sign in</button>
+    </form>
+  </main>
